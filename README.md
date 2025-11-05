@@ -1,32 +1,25 @@
 # KubeTwin
 
-KubeTwin is a SISFC fork, a simulator to reenact the behaviour of IT services in Federated Clouds. 
-KubeTwin aims to extends the SISFC project to provide a Kubernetes simulator.
-
-We are still on development stage.
-
+KubeTwin is a research-born software platform for creating Digital Twins of Kubernetes applications.
 
 ## Installation
 
 As KubeTwin was developed in Ruby, you will first need a working Ruby interpreter.
-Once you have Ruby installed, you can install SISFC through RubyGems:
+Once you have Ruby installed, you can install KubeTwin by cloning this repository and installing the required gems.
 
-While KubeTwin should work on MRI and Rubinius without problems, we highly
-recommend you to run it on top of JRuby. Since JRuby is our reference
-development platform, you will be very likely to have a smoother installation
-and usage experience when deploying SISFC on top of JRuby.
+Specifically, we recommend to use a Ruby version (> 3.x) and to use bundler for managing all the dependencies:
 
-To install and work with KubeTwin we kindly suggest to use bundler:
-
+```bash
     gem install bundler
 
     bundle config set path vendor/bundle
 
     bundle install
+```
 
 ## Usage
 
-To run the simulator with bundler simply digit:
+To run the KubeTwin on a simple scenario bundler simply digit:
 
     bundle exec bin/kube_twin examples/use_case.conf 
 
@@ -34,13 +27,16 @@ where example/use_case.conf is an example of a simulation environment configurat
 
 ## Examples
 
-The examples directory contains a set of example configuration files, including
-an [R](http://www.r-project.org) script that models a stochastic request
-generation process. To use that script, you will need R with the VGAM and
-truncnorm packages installed.
+The examples directory contains a set of example configuration files. We highly recommend to take a look.
+
+## Publications
+
+We suggest the following Publications:
+
+- Borsatti, Davide, Cerroni, Walter, Foschini, Luca, Grabarnik, Genady Ya., Manca, Lorenzo, Poltronieri, Filippo, Scotece, Domenico, Shwartz, Larisa, Stefanelli, Cesare, Tortonesi, Mauro, Zaccarini, Mattia (2024). KubeTwin: A Digital Twin Framework for Kubernetes Deployments at Scale. IEEE TRANSACTIONS ON NETWORK AND SERVICE MANAGEMENT, vol. 21, p. 3889-3903, ISSN: 1932-4537, doi: 10.1109/tnsm.2024.3405175
+
+- Manca, Lorenzo, Borsatti, Davide, Poltronieri, Filippo, Zaccarini, Mattia, Scotece, Domenico, Davoli, Gianluca, Foschini, Luca, Grabarnik, Genady Ya., Shwartz, Larisa, Stefanelli, Cesare, Tortonesi, Mauro, Cerroni, Walter (2023). Characterization of Microservice Response Time in Kubernetes: A Mixture Density Network Approach. In: 2023 19th International Conference on Network and Service Management (CNSM) : Network and Service Management in the Era of Generative AI and Digital Twins. p. 1-9, IEEE, ISBN: 9783903176591, Niagara Falls, Canada, 30/10/2023-02/11/2023, doi: 10.23919/cnsm59352.2023.10327842
 
 ## License
 
 This software is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-

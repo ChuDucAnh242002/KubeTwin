@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'as-duration', '~> 0.1.1'
-  spec.add_dependency 'erv', '~> 0.3.5'
+  spec.add_dependency 'erv', '~> 0.4.0'
   spec.add_dependency 'mhl'
   spec.add_dependency 'ice_nine', '~> 0.11.2'
 

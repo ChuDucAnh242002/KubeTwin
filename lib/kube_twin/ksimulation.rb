@@ -308,7 +308,7 @@ module KUBETWIN
       # request_generation is csv or R
       @to_generate = 0
       if @configuration.request_gen.nil?
-        #puts "#{@configuration.request_generation}"
+        # puts "#{@configuration.request_generation}"
         rg = RequestGeneratorR.new(@configuration.request_generation)
         # this is to avoid mismatch when reproducing logs
         req_attrs = rg.generate(now)
@@ -349,15 +349,17 @@ module KUBETWIN
 
       # benchmark file
       time = Time.now.strftime('%Y%m%d%H%M%S')
-      @sim_bench = File.open("csv_bench_#{time}.csv", 'w')
-      @allocation_bench = File.open("allocation_bench_#{time}.csv", 'w')
-      @request_profile = File.open("request_profile_#{time}.csv", 'w')
+      @sim_bench = File.open("csv_bench/csv_bench_#{time}.csv", 'w')
+      @allocation_bench = File.open("allocation_bench/allocation_bench_#{time}.csv", 'w')
+      @request_profile = File.open("request_profile/request_profile_#{time}.csv", 'w')
       @request_profile << "Time,CRequests\n"
       @last_second = @current_time.to_i
       @req_in_sec = 0
 
 
       @allocation_bench << "Time,Component,Request,TTP,Pods\n"
+
+      @current_time = @event_queue.shift.time
 
       # launch simulation
       until @event_queue.empty?

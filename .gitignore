@@ -29,6 +29,7 @@ test/tmp
 test/version_tmp
 tmp
 vendor
+final_allocation.txt
 
 # YARD artifacts
 .yardoc

@@ -63,7 +63,7 @@ p14 = axs[0].bar(tiers, euWest2Sample, bottom=euWest3Sample, label='eu-west-2')
 p15 = axs[0].bar(tiers, euNorthSample, bottom=euWest2Sample, label='eu-north-1')
 p16 = axs[0].bar(tiers, caCentralSample, bottom=euNorthSample, label='ca-central-1')
 p17 = axs[0].bar(tiers, usEastSample, bottom=caCentralSample, color='orange', label='us-east-1')
-'''
+
 p21 = axs.bar(tiers, localDcSorted, label='Local DC')
 p22 = axs.bar(tiers, euCentralSorted, bottom=localDc_50, label='eu-central-1')
 p23 = axs.bar(tiers, euWest2Sorted, bottom=euCentral_50, label='eu-west-3')
@@ -72,7 +72,7 @@ p25 = axs.bar(tiers, euNorthSorted, bottom=euWest2_50, label='eu-north-1')
 p26 = axs.bar(tiers, caCentralSorted, bottom=euNorth_50, label='ca-central-1')
 p27 = axs.bar(tiers, usEastSorted, bottom=caCentral_50, color='orange', label='us-east-1')
  
-'''
+
 p21 = axs[0].bar(tiers, localDc_50, label='Local DC')
 p22 = axs[0].bar(tiers, euCentral_50, bottom=localDc_50, label='eu-central-1')
 p23 = axs[0].bar(tiers, euWest3_50, bottom=euCentral_50, label='eu-west-3')
@@ -80,18 +80,18 @@ p24 = axs[0].bar(tiers, euWest2_50, bottom=euWest3_50, label='eu-west-2')
 p25 = axs[0].bar(tiers, euNorth_50, bottom=euWest2_50, label='eu-north-1')
 p26 = axs[0].bar(tiers, caCentral_50, bottom=euNorth_50, label='ca-central-1')
 p27 = axs[0].bar(tiers, usEast_50, bottom=caCentral_50, color='orange', label='us-east-1')
- 
-p21 = axs[1].bar(tiers, localDc_150)
-p22 = axs[1].bar(tiers, euCentral_150, bottom=localDc_150)
-p23 = axs[1].bar(tiers, euWest3_150, bottom=euCentral_150)
-p24 = axs[1].bar(tiers, euWest2_150, bottom=euWest3_150)
-p25 = axs[1].bar(tiers, euNorth_150, bottom=euWest2_150)
-p26 = axs[1].bar(tiers, caCentral_150, bottom=euNorth_150)
-p27 = axs[1].bar(tiers, usEast_150, bottom=caCentral_150, color='orange')
 '''
+p21 = axs.bar(tiers, localDc_150, label='Local DC')
+p22 = axs.bar(tiers, euCentral_150, bottom=localDc_150, label='eu-central-1')
+p23 = axs.bar(tiers, euWest3_150, bottom=euCentral_150, label='eu-west-3')
+p24 = axs.bar(tiers, euWest2_150, bottom=euWest3_150, label='eu-west-2')
+p25 = axs.bar(tiers, euNorth_150, bottom=euWest2_150, label='eu-north-1')
+p26 = axs.bar(tiers, caCentral_150, bottom=euNorth_150, label='ca-central-1')
+p27 = axs.bar(tiers, usEast_150, bottom=caCentral_150, color='orange', label='us-east-1')
+
 
 #axs[0].bar(datacenters, sampleValues, align='center', label='Pods Allocated')
-#axs[1].bar(datacenters, sortedValues, align='center', label='Pods Allocated')
+# axs.bar(datacenters, sortedValues, align='center', label='Pods Allocated')
  
 axs.set_title('Replicas Deployment')
 fig.tight_layout()

@@ -314,12 +314,14 @@ module KUBETWIN
         req_attrs = rg.generate(now)
         @current_time = @start_time = req_attrs[:generation_time] - 2
         @configuration.set_start(@current_time)
+        puts("ET_REQUEST_GENERATION")
         new_event(Event::ET_REQUEST_GENERATION, req_attrs, req_attrs[:generation_time], rg)
       else
         @configuration.request_gen.each do |k,v|
           @to_generate += @configuration.request_gen[k][:num_requests]
           rg = RequestGenerator.new(@configuration.request_gen[k])
           req_attrs = rg.generate(@configuration.request_gen[k][:starting_time].to_i)
+          puts("ET_REQUEST_GENERATION")
           new_event(Event::ET_REQUEST_GENERATION, req_attrs, req_attrs[:generation_time], rg)
         end
       end
@@ -327,12 +329,14 @@ module KUBETWIN
 
       # generate first HPA check
       @horizontal_pod_autoscaler_repo.each do | name, hpa|
+        puts("ET_HPA_CONTROL")
         new_event(Event::ET_HPA_CONTROL, [name, hpa], @current_time + hpa.period_seconds, nil)
       end
 
       # schedule end of simulation
       unless @configuration.end_time.nil?
         # puts "Simulation ends at: #{@configuration.end_time}"
+        puts("ET_END_OF_SIMULATION")
         new_event(Event::ET_END_OF_SIMULATION, nil, @configuration.end_time, nil)
       end
 
@@ -342,6 +346,7 @@ module KUBETWIN
       cooldown_treshold = @configuration.end_time - @configuration.cooldown_duration.to_i
 
       # get stats print
+      puts("ET_STATS_PRINT")
       new_event(Event::ET_STATS_PRINT, nil, warmup_threshold + @stats_print_interval, nil) unless @stats_print_interval.nil?
 
       requests_being_worked_on = 0
@@ -349,17 +354,17 @@ module KUBETWIN
 
       # benchmark file
       time = Time.now.strftime('%Y%m%d%H%M%S')
-      @sim_bench = File.open("csv_bench/csv_bench_#{time}.csv", 'w')
-      @allocation_bench = File.open("allocation_bench/allocation_bench_#{time}.csv", 'w')
-      @request_profile = File.open("request_profile/request_profile_#{time}.csv", 'w')
+      @sim_bench = File.open("csv/csv_bench/csv_bench_#{time}.csv", 'w')
+      @allocation_bench = File.open("csv/allocation_bench/allocation_bench_#{time}.csv", 'w')
+      @request_profile = File.open("csv/request_profile/request_profile_#{time}.csv", 'w')
       @request_profile << "Time,CRequests\n"
+      @current_time = @event_queue.shift.time - 1
       @last_second = @current_time.to_i
       @req_in_sec = 0
 
 
       @allocation_bench << "Time,Component,Request,TTP,Pods\n"
 
-      @current_time = @event_queue.shift.time
 
       # launch simulation
       until @event_queue.empty?
@@ -422,12 +427,14 @@ module KUBETWIN
                                                    arrival_time: arrival_time))
 
             # schedule arrival of current request
+            puts("ET_REQUEST_ARRIVAL")
             new_event(Event::ET_REQUEST_ARRIVAL, [new_req, pod], arrival_time, nil)
 
             # schedule generation of next request
             if @current_time < cooldown_treshold && @generated < @to_generate#warmup_threshold
                 rg = e.destination
                 req_attrs = rg.generate(@current_time)
+                puts("ET_REQUEST_GENERATION")
                 new_event(Event::ET_REQUEST_GENERATION, req_attrs, req_attrs[:generation_time], rg) if req_attrs
             end
 
@@ -452,6 +459,7 @@ module KUBETWIN
 
             # schedule request forwarding to pod
             @forwarded += 1
+            puts("ET_REQUEST_FORWARDING")
             new_event(Event::ET_REQUEST_FORWARDING, req, e.time, pod)
 
               # update stats
@@ -556,6 +564,7 @@ module KUBETWIN
               # if the current microservice is the one which the old was waiting, free the old container
               pod.container.to_free(container) unless container.wait_for.empty?
 
+              puts("ET_REQUEST_FORWARDING")
               new_event(Event::ET_REQUEST_FORWARDING, req, forwarding_time, pod)
 
             else # workflow is finished
@@ -576,6 +585,7 @@ module KUBETWIN
               req.update_transfer_time(transmission_time)
 
               # schedule request closure
+              puts("ET_REQUEST_CLOSURE")
               new_event(Event::ET_REQUEST_CLOSURE, req, e.time + transmission_time, nil)
             end
 
@@ -734,6 +744,7 @@ module KUBETWIN
 
             # schedule next control
             if @current_time + hpa.period_seconds < cooldown_treshold
+              puts("ET_HPA_CONTROL")
               new_event(Event::ET_HPA_CONTROL, [hname, hpa], @current_time + hpa.period_seconds, nil)
             end
 
